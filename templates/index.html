@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cervical Cancer Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>🧬 Cervical Cancer Prediction</h1>
+    <p class="subtitle">AI-powered medical risk assessment</p>
+
+    <!-- LEGEND -->
+    <div class="legend">
+        <b>Binary Fields:</b> 0 = No, 1 = Yes
+    </div>
+
+
+    <form method="post" action="/predict">
+        <div class="grid grid-2">
+            {% for name, type in features %}
+                <div class="field">
+                    <label>{{ name }}</label>
+
+                    {% if type == "bin" %}
+                        <select name="f{{ loop.index0 }}">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                        </select>
+                    {% else %}
+                        <input type="number" step="any" name="f{{ loop.index0 }}" required>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">🔍 Predict</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            {{ result }}
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
